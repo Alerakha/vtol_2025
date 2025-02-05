@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import time
 import onnxruntime as ort
 
 # Load model YOLOv8 ONNX
@@ -30,6 +31,8 @@ while True:
     outputs = session.run(None, {"images": input_tensor})
 
     # Dummy hasil deteksi (implementasikan parsing hasil sesuai output model)
+    fps = 1 / (time.time() - start_time)
+    cv2.putText(frame, f"FPS: {fps:.2f}", (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     cv2.putText(frame, "Detected Object (ONNX)", (50, 50), 
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 

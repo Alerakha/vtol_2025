@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import time
 import tensorrt as trt
 import pycuda.autoinit
 import pycuda.driver as cuda
@@ -55,6 +56,8 @@ while True:
     stream.synchronize()
 
     # Dummy hasil deteksi (implementasikan parsing hasil sesuai output model)
+    fps = 1 / (time.time() - start_time)
+    cv2.putText(frame, f"FPS: {fps:.2f}", (20, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
     cv2.putText(frame, "Detected Object (TensorRT)", (50, 50),
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
 
