@@ -2,11 +2,14 @@ import tensorrt as trt
 import pycuda.autoinit
 import pycuda.driver as cuda
 import numpy as np
+import cv2
 
 # Load TensorRT engine
 TRT_LOGGER = trt.Logger(trt.Logger.WARNING)
-with open("yolov8.trt", "rb") as f, trt.Runtime(TRT_LOGGER) as runtime:
+with open("/home/krti/yolov8n.trt", "rb") as f, trt.Runtime(TRT_LOGGER) as runtime:
     engine = runtime.deserialize_cuda_engine(f.read())
+
+context = engine.create_execution_context()
 
 # Inisialisasi CUDA memory
 inputs, outputs, bindings, stream = [], [], [], cuda.Stream()
